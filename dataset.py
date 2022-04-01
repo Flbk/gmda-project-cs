@@ -10,6 +10,8 @@ def gaussian_blobs(
     seed=0,
     n_samples=3000,
     max_d=3,
+    uniform_noise=None,
+    return_parameter=False,
 ):
     """Makes gaussian blobs parametrized by the angles of rotation, their relative distance and dispersion."""
     rng = np.random.default_rng(seed=seed)
@@ -46,4 +48,15 @@ def gaussian_blobs(
         )
         list_gmm_samples.append(gaussian_samples)
 
-    return np.vstack(list_gmm_samples)
+    samples = np.vstack(list_gmm_samples)
+
+    if uniform_noise is not None:
+        outliers = rng.uniform(
+            low=-d * (max_d + 2), high=d * (max_d + 2), size=(uniform_noise, 2)
+        )
+        samples = np.vstack((samples, outliers))
+
+    if return_parameter:
+        return samples, means, list_covariance_matrices
+
+    return samples
