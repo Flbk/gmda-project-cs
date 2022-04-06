@@ -1,11 +1,12 @@
 import numpy as np
 from joblib import Parallel, delayed
-from kmeans import phi, kmeans_pp_init, distance_to_centers, KMeans
+
 from dataset import gaussian_blobs
+from kmeans import KMeans, distance_to_centers, kmeans_pp_init, phi, random_init
 
 
-def kmeans_and_phi(samples, init="kmeanspp", seed=None, normalize=True):
-    kmeans = KMeans(n_clusters=5, seed=seed, init=init)
+def kmeans_and_phi(samples, init="kmeanspp", seed=None, normalize=True, n_clusters=5):
+    kmeans = KMeans(n_clusters=n_clusters, seed=seed, init=init)
     kmeans.fit(samples)
     centers = kmeans.centers
     return phi(samples=samples, centers=centers, normalize=normalize)
@@ -17,14 +18,33 @@ def get_n_outliers(means, list_covariance_matrices, centers, threshold=4):
     return n_outliers
 
 
-def exponent_experiment(list_p, n_experiments, metric_func):
+def exponent_experiment(
+    list_p,
+    n_experiments,
+    metric_func,
+    d=1.5,
+    ratio_uniform=0.1,
+    n_samples=500,
+    rotation="random",
+    n_clusters=5,
+):
     def make_experiments(p, n_experiments, metric_func):
+        uniform_noise = int(ratio_uniform * n_samples)
         list_metric = []
         for n in range(n_experiments):
             samples, list_covariance_matrices, means = gaussian_blobs(
-                d=1.5, uniform_noise=50, seed=n, n_samples=500, return_parameter=True
+                d=d,
+                uniform_noise=uniform_noise,
+                seed=n,
+                n_samples=n_samples,
+                return_parameter=True,
+                list_angles=rotation,
+                n_blobs=n_clusters,
             )
-            centers = kmeans_pp_init(samples, 5, seed=n, p=p)
+            if p == 0.0:
+                centers = random_init(samples, n_clusters, seed=n)
+            else:
+                centers = kmeans_pp_init(samples, n_clusters=n_clusters, seed=n, p=p)
             if metric_func == "outliers":
                 metric = get_n_outliers(
                     means=means,
@@ -34,10 +54,13 @@ def exponent_experiment(list_p, n_experiments, metric_func):
             if metric_func == "phi":
                 metric = phi(centers=centers, samples=samples)
             if metric_func == "kmeans+phi":
-                metric = kmeans_and_phi(samples=samples, init=centers)
+                metric = kmeans_and_phi(
+                    samples=samples, init=centers, n_clusters=n_clusters
+                )
             list_metric.append(metric)
         return np.array(list_metric)
 
+    out = make_experiments(list_p[1], n_experiments, metric_func)
     p_metric = Parallel(n_jobs=-1)(
         delayed(make_experiments)(p, n_experiments, metric_func) for p in list_p
     )

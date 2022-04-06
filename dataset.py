@@ -1,5 +1,6 @@
-import numpy as np
 from itertools import cycle
+
+import numpy as np
 
 
 def gaussian_blobs(
@@ -11,6 +12,7 @@ def gaussian_blobs(
     n_samples=3000,
     max_d=3,
     uniform_noise=None,
+    non_negative=True,
     return_parameter=False,
 ):
     """Makes gaussian blobs parametrized by the angles of rotation, their relative distance and dispersion."""
@@ -23,6 +25,8 @@ def gaussian_blobs(
     y_centers = rng.choice(pos_1d, size=n_blobs, replace=False).reshape(-1, 1)
 
     means = d * np.hstack([x_centers, y_centers])
+    if list_angles == "random":
+        list_angles = rng.integers(0, 359, (n_blobs,))
 
     list_covariance_matrices = []
     for vp, angle, i in zip(
@@ -55,6 +59,11 @@ def gaussian_blobs(
             low=-d * (max_d + 2), high=d * (max_d + 2), size=(uniform_noise, 2)
         )
         samples = np.vstack((samples, outliers))
+    if non_negative:
+        min_samples = samples.min(axis=0)
+        samples = samples + 2 * np.abs(min_samples)
+        means = means + 2 * np.abs(min_samples)
+        assert (samples > 0).all()
 
     if return_parameter:
         return samples, means, list_covariance_matrices

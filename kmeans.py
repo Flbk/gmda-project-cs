@@ -1,6 +1,6 @@
 import numpy as np
-from sklearn.neighbors import NearestNeighbors
 from scipy.spatial.distance import cdist
+from sklearn.neighbors import NearestNeighbors
 
 
 def kmeans_pp_init(X, n_clusters, p=2, seed=None, return_ind=False):
@@ -113,6 +113,7 @@ class KMeans:
                 centers[k] = class_mean
 
         self.centers = centers
+        return self
 
     def predict(self, X):
         """Predict the classes of input data using the fitted centroids.
@@ -124,3 +125,7 @@ class KMeans:
             array (n,): predicted labels (i.e., indices of the closest centroid).
         """
         return self.predict_(X, self.centers)
+
+    def fit_predict(self, X):
+        self.fit(X)
+        return self.centers, self.predict(X)
