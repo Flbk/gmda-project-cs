@@ -16,8 +16,11 @@ Here are the description of each file.
 
 ### Classes and function
 `dataset.py`: functions to build the parametric dataset.
+
 `kmeans.py`: KMeans class and related functions like KMeans++.
+
 `nmf.py`: NMF classes.
+
 `visualization.py`: Utility function to plot our figures using `plotly`.
 
 ### Scripts
@@ -26,6 +29,9 @@ All the outputs presented in the report are from Python scripts found here. They
 If you want the figures to be printed on screen, use the `--show` arguent (not default).
 
 `dataset_experiment.py`: A small script to play with the parametric dataset.
+
 `kmeans_pp_experiment.py`: The experiments related to KMeans++ initialization.
+
 `nmf_experiments.py`: The experiments related to 2-NMF and 3-NMF.
+
 `data_embedding.py`: A small experiments in which we embed the 2D data into a high dimensional space.
