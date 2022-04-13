@@ -135,7 +135,6 @@ class TriNMF:
                 F[i, :] = rng.uniform(min_val, max_val, size=(self.n_clusters))
 
         if self.init == "kmeanspp":
-            print("kmeanspp")
             F = kmeans_pp_init(X.T, self.n_clusters, seed=self.seed).T
 
         G = rng.uniform(size=(N, self.n_clusters))
