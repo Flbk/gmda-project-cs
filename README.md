@@ -35,3 +35,6 @@ If you want the figures to be printed on screen, use the `--show` arguent (not d
 `nmf_experiments.py`: The experiments related to 2-NMF and 3-NMF.
 
 `data_embedding.py`: A small experiments in which we embed the 2D data into a high dimensional space.
+
+### Report and articles
+The cited articles are in the folder `articles`. The project report (mandatory deliverable for the course) is `project_report.pdf`.
