@@ -4,7 +4,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import plotly.io as pio
-
+pio.kaleido.scope.mathjax = None
 cmap = px.colors.qualitative.Plotly
 
 

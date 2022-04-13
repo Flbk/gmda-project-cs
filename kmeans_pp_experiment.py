@@ -1,7 +1,6 @@
 # %%
 import argparse
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -118,7 +117,6 @@ for i in range(1, n_rows + 1):
                 seed=i,
             )
         else:
-            print(list_p[j - 1])
             centers = kmeans_pp_init(samples, args.n_clusters, seed=i, p=list_p[j - 1])
         fig.add_trace(trace_X, row=i, col=j)
         fig.add_traces(
@@ -182,7 +180,7 @@ for i, p in enumerate(list_p):
         )
     )
 fig.update_layout(
-    title="Exponent influence on the average number of selected outliers, 50 experiments",
+    title="Average number of selected outliers, 50 experiments",
     margin={"t": 50, "r": 5, "l": 5, "b": 5},
     width=600,
     height=300,
@@ -198,7 +196,7 @@ save_fig(fig, "p-analysis-violin.pdf", args.save_path, show=args.show)
 fig = px.bar(x=list_p, y=p_outliers.mean(axis=1), color=list_p.astype(str))
 
 fig.update_layout(
-    title="Exponent influence on the average number of selected outliers, 50 experiments",
+    title="Repartition of the number of selected outliers, 50 experiments",
     margin={"t": 50, "r": 5, "l": 5, "b": 5},
     width=600,
     height=300,
