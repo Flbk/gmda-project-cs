@@ -27,7 +27,6 @@ parser = argparse.ArgumentParser(
 )
 args = parser.parse_args()
 
-# %%
 print("KMeans pp investigation. Use --show to print the figures.")
 print("Experiment 1 - KMeans vs random initialisation...")
 n_uniform = int(args.n_samples * args.ratio_uniform)
@@ -83,7 +82,6 @@ fig.update_annotations(font=dict())
 
 save_fig(fig, "kmeans-random-init.pdf", args.save_path, show=args.show)
 
-# %%
 print("Experiment 2 - Studying the influence of p...")
 n_rows = 3
 n_cols = 6
@@ -141,7 +139,6 @@ fig.update_traces(textposition="top center")
 fig.update_annotations(font=dict())
 save_fig(fig, "p-on-data.pdf", args.save_path, args.show)
 
-# %%
 n_experiments = 50
 list_p = np.array([0, 1, 2, 3, 4, 5, 6, 7])
 p_outliers = exponent_experiment(
@@ -165,7 +162,6 @@ p_phi = exponent_experiment(
     n_samples=args.n_samples,
 )
 
-# %%
 fig = go.Figure()
 
 
@@ -192,7 +188,6 @@ fig.update_xaxes(title="p", tickmode="linear")
 save_fig(fig, "p-analysis-violin.pdf", args.save_path, show=args.show)
 
 
-# %%
 fig = px.bar(x=list_p, y=p_outliers.mean(axis=1), color=list_p.astype(str))
 
 fig.update_layout(
@@ -208,7 +203,6 @@ fig.update_xaxes(title="p", tickmode="linear")
 
 save_fig(fig, "p-analysis-bar.pdf", args.save_path, show=args.show)
 
-# %%
 fig = px.bar(x=list_p, y=p_phi.mean(axis=1), color=list_p.astype(str))
 
 fig.update_layout(
@@ -224,7 +218,6 @@ fig.update_xaxes(title="p", tickmode="linear")
 save_fig(fig, "phi-analysis-bar.pdf", args.save_path, show=args.show)
 
 
-# %%
 fig = go.Figure()
 
 
@@ -251,7 +244,7 @@ fig.update_xaxes(title="p", tickmode="linear")
 
 save_fig(fig, "phi-analysis-violin.pdf", args.save_path, show=args.show)
 
-# %%
+
 def exponent_experiment_report(list_metric, list_p):
     list_dict = []
     for i in range(len(list_p)):
@@ -269,6 +262,5 @@ def exponent_experiment_report(list_metric, list_p):
         print(df_experiment)
 
 
-# %%
 print("p influence on phi on 50 experiment:")
 exponent_experiment_report(p_phi, list_p)
