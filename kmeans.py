@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Iterable
 
 import numpy as np
 from scipy.spatial.distance import cdist
@@ -91,7 +91,7 @@ def distance_to_centers(
         np.ndarray (M,): The distance to the gaussians.
     """
     list_dist = []
-    for mean, cov in zip(list_covariance, means):
+    for mean, cov in zip(list_covariance_matrices, means):
         dist = cdist(
             centers, mean[None, :], metric="mahalanobis", VI=np.linalg.inv(cov)
         )

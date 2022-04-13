@@ -21,7 +21,7 @@ def save_fig(fig: go.Figure, file_name: str, dir_path: str, show: bool = False):
     """
     if show:
         fig.show()
-    if dir_path_name != None:
+    if dir_path != None:
         save_file = Path(dir_path) / file_name
         save_file.parent.mkdir(exist_ok=True, parents=True)
         pio.full_figure_for_development(fig, warn=False)
