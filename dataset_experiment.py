@@ -8,6 +8,8 @@ from dataset import gaussian_blobs
 
 
 class ConvertDegreesAction(argparse.Action):
+    """Class to automatically convert input degrees to radians."""
+
     def __call__(self, parser, namespace, values, **kwargs):
         setattr(namespace, self.dest, np.deg2rad(values))
 
@@ -31,7 +33,7 @@ dataset_parser.add_argument(
 dataset_parser.add_argument(
     "-n",
     "--n_samples",
-    help="The number of samples to draw on the dataset.",
+    help="The number of samples to draw for the dataset.",
     type=int,
     default=500,
 )
@@ -52,16 +54,14 @@ dataset_parser.add_argument(
 dataset_parser.add_argument(
     "--save_path",
     help="Where to save the figures. If empty the figures won't be saved.",
-    default="",
+    default=None,
 )
 dataset_parser.add_argument(
     "--show",
     help="Whether to print the figures during execution.",
     action="store_true",
 )
-# %%
 
-# %%
 if __name__ == "__main__":
     args = dataset_parser.parse_args()
     samples = gaussian_blobs(d=2, max_d=3, n_blobs=args.n_clusters)
@@ -69,5 +69,3 @@ if __name__ == "__main__":
     fig.add_trace(go.Scatter(x=samples[:, 0], y=samples[:, 1], mode="markers"))
     fig.update_layout(margin={"t": 5, "r": 5, "l": 5, "b": 5}, width=500, height=300)
     fig.update_yaxes(scaleanchor="x", scaleratio=1)
-
-# %%
