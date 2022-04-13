@@ -4,8 +4,7 @@ import numpy as np
 from joblib import Parallel, delayed
 
 from dataset import gaussian_blobs
-from kmeans import (KMeans, distance_to_centers, kmeans_pp_init, phi,
-                    random_init)
+from kmeans import KMeans, distance_to_centers, kmeans_pp_init, phi, random_init
 
 
 def kmeans_and_phi(
@@ -18,7 +17,7 @@ def kmeans_and_phi(
     """Run KMeans algorithm and compute the value of the potential $\phi$.
 
     Args:
-        samples (np.ndarray): The dataset to cluster.
+        samples (np.ndarray, (N, p)): The dataset to cluster.
         init (str, optional): Which initialization to use. See KMeans documentation for details. Defaults to "kmeanspp".
         seed (Optional[int], optional): Random seed to use. None means no control (and no reproducibility). Defaults to None.
         normalize (bool, optional): Whether to compute $\phi$ with a sum or mean. Defaults to True.

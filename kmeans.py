@@ -15,7 +15,7 @@ def kmeans_pp_init(
     """Run KMeans++ initialization on a dataset.
 
     Args:
-        X (np.ndarray, (n, p)): The dataset.
+        X (np.ndarray, (N, p)): The dataset.
         n_clusters (int): The number of clusters.
         p (int, optional): The exponent for KMeans++. Defaults to 2.
         seed (Optional[int], optional): Random seed to use. None means no control (and no reproducibility). Defaults to None.
@@ -57,7 +57,7 @@ def random_init(X, n_clusters, seed=0):
     """Chose the clusters at random.
 
     Args:
-        X (np.ndarray, (n, p)): The dataset.
+        X (np.ndarray, (N, p)): The dataset.
         n_clusters (int): The number of clusters.
         seed (Optional[int], optional): Random seed to use. None means no control (and no reproducibility). Defaults to None.
 
@@ -83,9 +83,9 @@ def distance_to_centers(
     """Compute the closest distance between chosen centers and gaussian clusters.
 
     Args:
-        means (np.ndarray, (N, 2)): The means of the gaussians.
+        means (np.ndarray, (K, 2)): The means of the gaussians.
         list_covariance_matrices (Iterable[np.ndarray]): List of the covariance matrices of the gaussian.
-        centers (np.ndarray, (M, 2)): The centers among which we want to look for outliers.
+        centers (np.ndarray, (L, 2)): The centers among which we want to look for outliers.
 
     Returns:
         np.ndarray (M,): The distance to the gaussians.
@@ -104,7 +104,7 @@ def phi(centers: np.ndarray, samples: np.ndarray, normalize: bool = False):
 
     Args:
         centers (np.ndarray, (K, p)): The position of the centers.
-        samples (np.ndarray, (n, p)): The dataset samples.
+        samples (np.ndarray, (N, p)): The dataset samples.
         normalize (bool, optional): Whether to compute phi using a sum or a mean. Defaults to False.
 
     Returns:
@@ -132,11 +132,11 @@ class KMeans:
         """Assign each samples of input data to the closest centroid.
 
         Args:
-            X (np.ndarray, (n, p)): input data to assign.
-            centers (np.ndarray, (k, p)): the centers. For k in {0, .., K-1} center[k] contains the center of class k.
+            X (np.ndarray, (N, p)): input data to assign.
+            centers (np.ndarray, (K, p)): the centers. For k in {0, .., K-1} center[k] contains the center of class k.
 
         Returns:
-            np.ndarray, (n,): the labels (the indices of the closest centroid) for each sample.
+            np.ndarray, (N,): the labels (the indices of the closest centroid) for each sample.
         """
         neighs = NearestNeighbors(n_neighbors=1)
         neighs.fit(centers)
@@ -151,7 +151,7 @@ class KMeans:
         The initialisation is done by drawing n_classes random points (without replacement) or with kmeans++.
 
         Args:
-            X (np.ndarray, (n, p)): data to cluster
+            X (np.ndarray, (N, p)): data to cluster
         """
         if isinstance(self.init, np.ndarray):
             centers = self.init.copy()
@@ -177,10 +177,10 @@ class KMeans:
         """Predict the classes of input data using the fitted centroids.
 
         Args:
-            X (np.ndarray (n, p)): data.
+            X (np.ndarray (N, p)): data.
 
         Returns:
-            np.ndarray (n,): predicted labels (i.e., indices of the closest centroid).
+            np.ndarray (N,): predicted labels (i.e., indices of the closest centroid).
         """
         return self.predict_(X, self.centers)
 
@@ -188,7 +188,7 @@ class KMeans:
         """A wrapper to predict the classes of input data using the fitted centroids.
 
         Args:
-            X (np.ndarray (n, p)): data.
+            X (np.ndarray (N, p)): data.
 
         Returns:
             Tuple[np.ndarray, np.ndarray]: The centers and the predicted labels (i.e., indices of the closest centroid).

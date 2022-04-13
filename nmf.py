@@ -33,7 +33,7 @@ class NMF:
         """Fit the NMF with orthogonality constraints.
 
         Args:
-            X (np.ndarray): The samples on which to fit the NMF.
+            X (np.ndarray, (N, p)): The samples on which to fit the NMF.
 
         Returns:
             Tuple[np.ndarray, np.ndarray]: F and G factor matrices of X.
@@ -117,7 +117,7 @@ class TriNMF:
         """Fit the 3-NMF with orthogonality constraints.
 
         Args:
-            X (np.ndarray): The samples on which to fit the NMF.
+            X (np.ndarray, (N, p)): The samples on which to fit the NMF.
 
         Returns:
             Tuple[np.ndarray, np.ndarray, np.ndarray]: F, S and G factor matrices of X.

@@ -43,7 +43,7 @@ def plot_centers(
 
     Args:
         samples (np.ndarray, (N, 2)): The 2D dataset.
-        centers (np.ndarray, (M, 2)): M 2D cluster's centers.
+        centers (np.ndarray, (K, 2)): M 2D cluster's centers.
         name (str, optional): The name of the dataset for the legend. Defaults to "".
         color (str, optional): The color for the centers. Defaults to "red".
         title (str, optional): The title of the figure. Defaults to "".
@@ -97,8 +97,8 @@ def plot_several_centers(
     """Plot several highlighted batch of centers on top of a 2D dataset.
 
     Args:
-        samples (np.ndarray): _description_
-        list_centers (Iterable[np.ndarray]): List of (M, 2) arrays containing centers from different ouputs.
+        samples (np.ndarray, (N, 2)): The dataset samples.
+        list_centers (Iterable[np.ndarray]): List of (K, 2) arrays containing centers from different ouputs.
         list_names (Iterable[str]): List of legend names of each batch of centers.
         list_colors (Iterable[str]): The colors for each batch of center.
         width (int, optional): Figure's width. Defaults to 400.
@@ -141,7 +141,7 @@ def plot_clustering(
     Args:
         X (np.ndarray, (N, 2)): The 2D dataset.
         labels (np.ndarray, (N,)): The labels of each point.
-        width (int, optional): The width of the figure.. Defaults to 400.
+        width (int, optional): The width of the figure. Defaults to 400.
         height (int, optional): The height of the figure. Defaults to 300.
 
     Returns:
