@@ -1,0 +1,5 @@
+numpy
+plotly
+kaleido
+scikit-learn
+pandas
