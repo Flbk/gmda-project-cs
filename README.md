@@ -3,6 +3,8 @@
 ## Report
 The main report of this work is the pdf `project_report.pdf`.
 
+![Exponent influence on function phi](homogene-eigval.pdf)
+
 ## Installation
 Simply build a virtual environment using `virtualenv` or `conda` and install the requirements.
 
